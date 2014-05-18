@@ -1,0 +1,54 @@
+algoritmo "CriarBaralho"
+inicio
+	enumeracao Naipes
+	enumeracao Valores
+	var cartas : Lista<Carta>
+	var carta : Carta
+	var naipe : Naipes
+	var valor : Valores
+	
+	para cada naipe de Naipes
+		para cada valor de Valores
+			carta = nova Carta (naipe, valor)
+			cartas.adicionarCarta(carta)
+		fim para
+	fim para
+fim
+
+algoritmo "Embaralhar"
+inicio
+	var cartas : Lista<Cartas>
+	var aux : Carta
+	var tamanhoBaralho, i, j : inteiro
+	
+	tamanhoBaralho <- cartas.tamanho()
+	
+	para i de 0 ate (tamanhoBaralho - 1) passo 1
+		j <- sorteia (0, tamanhoBaralho - 1)
+		
+		se i <> j
+			aux = carta[i]
+			carta[i] = carta[j]
+			carta[j] = aux
+		fim se
+	fim para
+fim
+
+algoritmo "DistribuirCartas"	
+inicio
+	constante inteiro quantidadeJogadores <- 2
+	constante inteiro quantidadeCartasPorJogador <- 3
+	
+	var cartas : Lista<Carta>
+	var jogadores : Lista<Deck>
+	var carta : Carta
+	
+	cartas <- CriarBaralho()
+
+	Embaralhar(cartas)
+	
+	para i de 0 ate quantidadeJogadores * quantidadeCartasPorJogador passo 1
+		carta <- cartas[i]
+		deckJogadores[i % quantidadeJogadores].adicionarCarta(carta) 
+	fim para
+fim
